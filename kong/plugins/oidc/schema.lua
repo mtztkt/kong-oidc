@@ -93,6 +93,13 @@ return {
             }
           },
           {
+            use_nonce = {
+              type = "string",
+              required = true,
+              default = "no"
+            }
+          },
+          {
             response_type = {
               type = "string",
               required = true,
@@ -114,6 +121,13 @@ return {
             }
           },
           {
+            use_pkce  = {
+              type = "string",
+              required = true,
+              default = "no"
+            }
+          },
+          {
             token_endpoint_auth_method = {
               type = "string",
               required = true,
@@ -124,6 +138,11 @@ return {
             session_secret = {
               type = "string",
               required = false
+            }
+          },
+          {
+            session_opts = {
+              type = "string"
             }
           },
           {
