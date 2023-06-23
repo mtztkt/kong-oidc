@@ -83,8 +83,21 @@ function M.get_options(config, ngx)
     bearer_jwt_auth_allowed_auds = config.bearer_jwt_auth_allowed_auds,
     bearer_jwt_auth_signing_algs = config.bearer_jwt_auth_signing_algs,
     header_names = config.header_names or {},
-    header_claims = config.header_claims or {}
+    header_claims = config.header_claims or {},
+    use_pkce = config.use_pkce == "yes",
+    session_opts = config.session_opts,
+    use_nonce = config.use_nonce == "yes"
   }
+end
+
+function M.getSessionOptions(opts)
+  if(opts.session_opts~=nil) then
+     ngx.log(ngx.DEBUG, "99999999")
+     local data = cjson.decode(opts.session_opts)
+     ngx.log(ngx.DEBUG, data.storage )
+    return data
+  end
+  return nil
 end
 
 -- Function set_consumer is derived from the following kong auth plugins:
