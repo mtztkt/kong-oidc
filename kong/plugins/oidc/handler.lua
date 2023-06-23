@@ -87,12 +87,13 @@ end
 
 function make_oidc(oidcConfig)
   ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
+  local session_opts = utils.getSessionOptions(oidcConfig)
   local unauth_action = oidcConfig.unauth_action
   if unauth_action ~= "auth" then
     -- constant for resty.oidc library
     unauth_action = "deny"
   end
-  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action)
+  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action,session_opts)
 
   if err then
     if err == 'unauthorized request' then
