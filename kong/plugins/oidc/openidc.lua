@@ -1470,7 +1470,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       log(ERROR, "Error starting session: " .. session_error)
       return nil, session_error, target_url, session
     end
-    session.present = present
+    session.data.present = present
   end
 
   target_url = target_url or ngx.var.request_uri
@@ -1482,7 +1482,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
   if path == openidc_get_redirect_uri_path(opts) then
     log(DEBUG, "Redirect URI path (" .. path .. ") is currently navigated -> Processing authorization response coming from OP")
 
-    if not session.present then
+    if not session.data.present then
       err = "request to the redirect_uri path but there's no session state found"
       log(ERROR, err)
       return nil, err, target_url, session
@@ -1506,7 +1506,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   local token_expired = false
   local try_to_renew = opts.renew_access_token_on_expiry == nil or opts.renew_access_token_on_expiry
-  if session.present and session.data.authenticated
+  if session.data.present and session.data.authenticated
       and store_in_session(opts, 'access_token') then
 
     -- refresh access_token if necessary
@@ -1521,7 +1521,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
   end
 
   log(DEBUG,
-    "session.present=", session.present,
+    "session.data.present=", session.data.present,
     ", session.data.id_token=", session.data.id_token ~= nil,
     ", session.data.authenticated=", session.data.authenticated,
     ", opts.force_reauthorize=", opts.force_reauthorize,
@@ -1531,7 +1531,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   -- if we are not authenticated then redirect to the OP for authentication
   -- the presence of the id_token is check for backwards compatibility
-  if not session.present
+  if not session.data.present
       or not (session.data.id_token or session.data.authenticated)
       or opts.force_reauthorize
       or (try_to_renew and token_expired) then
