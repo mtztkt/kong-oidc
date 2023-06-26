@@ -22,7 +22,6 @@ description = {
     license = "Apache 2.0"
 }
 dependencies = {
- "lua-resty-session >= 4.0.4",
 }
 build = {
     type = "builtin",
