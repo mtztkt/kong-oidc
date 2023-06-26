@@ -1470,6 +1470,14 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       log(ERROR, "Error starting session: " .. session_error)
       return nil, session_error, target_url, session
     end
+    log(DEBUG,
+    "session.data.present=", session.data.present,
+    ", session.data.id_token=", session.data.id_token ~= nil,
+    ", session.data.authenticated=", session.data.authenticated,
+    ", opts.force_reauthorize=", opts.force_reauthorize,
+    ", opts.renew_access_token_on_expiry=", opts.renew_access_token_on_expiry,
+    ", try_to_renew=", try_to_renew,
+    ", token_expired=", token_expired)
     session.data.present = present
   end
 
