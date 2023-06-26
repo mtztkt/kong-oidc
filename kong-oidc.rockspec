@@ -22,7 +22,6 @@ description = {
     license = "Apache 2.0"
 }
 dependencies = {
-    "lua-resty-openidc ~> 1.7.6-3"
 }
 build = {
     type = "builtin",
@@ -32,5 +31,6 @@ build = {
     ["kong.plugins.oidc.schema"] = "kong/plugins/oidc/schema.lua",
     ["kong.plugins.oidc.session"] = "kong/plugins/oidc/session.lua",
     ["kong.plugins.oidc.utils"] = "kong/plugins/oidc/utils.lua"
+    ["kong.plugins.oidc.openidc"] = "kong/plugins/oidc/openidc.lua"
     }
 }
