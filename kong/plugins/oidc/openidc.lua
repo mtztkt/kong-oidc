@@ -1472,6 +1472,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     end
     log(DEBUG,
     "session.data.present=", session.data.present,
+    "session.data.refreshed=", session.data.refreshed,
     ", session.data.id_token=", session.data.id_token ~= nil,
     ", session.data.authenticated=", session.data.authenticated,
     ", opts.force_reauthorize=", opts.force_reauthorize,
