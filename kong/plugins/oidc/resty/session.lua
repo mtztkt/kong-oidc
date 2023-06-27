@@ -789,8 +789,9 @@ local function open(self, remember, meta_only)
 
   local audience_index
   local count = #data
+  log(DEBUG, "8888888 endpoint response: ", count)
   for i = 1, count do
-    log(DEBUG, "8888888 endpoint response: ", data[i][2])
+    
     if data[i][2] == audience then
       audience_index = i
       break
