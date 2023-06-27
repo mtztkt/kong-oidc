@@ -1465,7 +1465,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     local session_error
     local present
     local refreshed
-    session, session_error,present, refreshed = require "resty.session".start()
+    session, session_error,present, refreshed = require "resty.session".start({ audience = "oidc-openbanking"})
     if session == nil then
       log(ERROR, "Error starting session: " .. session_error)
       return nil, session_error, target_url, session
