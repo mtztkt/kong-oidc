@@ -15,7 +15,7 @@ local isempty = require "table.isempty"
 local buffer = require "string.buffer"
 local utils = require "oidc.session.utils"
 
-
+local log = ngx.log
 local clear_request_header = ngx.req.clear_header
 local set_request_header = ngx.req.set_header
 local setmetatable = setmetatable
@@ -796,7 +796,7 @@ local function open(self, remember, meta_only)
       break
     end
   end
-
+  log(DEBUG, "8888888" .. " endpoint response: ", data)
   if not audience_index then
     data[count + 1] = self.data[data_index]
     self.state = STATE_NEW
