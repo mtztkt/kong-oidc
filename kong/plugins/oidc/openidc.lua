@@ -1465,7 +1465,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     local session_error
     local present
     local refreshed
-    session, session_error,present, refreshed = r_session..start({
+    session, session_error,present, refreshed = r_session.start({
   audience = "my-application",
 })
     if session == nil then
