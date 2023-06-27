@@ -22,6 +22,8 @@ description = {
     license = "Apache 2.0"
 }
 dependencies = {
+    "lua-ffi-zlib >= 0.5",
+    "lua-resty-openssl >= 0.8.0",
 }
 build = {
     type = "builtin",
@@ -31,6 +33,20 @@ build = {
     ["kong.plugins.oidc.schema"] = "kong/plugins/oidc/schema.lua",
     ["kong.plugins.oidc.session"] = "kong/plugins/oidc/session.lua",
     ["kong.plugins.oidc.utils"] = "kong/plugins/oidc/utils.lua",
-    ["kong.plugins.oidc.openidc"] = "kong/plugins/oidc/openidc.lua"
+    ["kong.plugins.oidc.openidc"] = "kong/plugins/oidc/openidc.lua",
+    ["oidc.session"] = "kong/plugins/oidc/resty/session.lua",
+    ["oidc.session.dshm"] = "kong/plugins/oidc/resty/session/dshm.lua",
+    ["oidc.session.file"] = "kong/plugins/oidc/resty/session/file.lua",
+    ["oidc.session.file.thread"] = "kong/plugins/oidc/resty/session/file/thread.lua",
+    ["oidc.session.file.utils"] = "kong/plugins/oidc/resty/session/file/utils.lua",
+    ["oidc.session.memcached"] = "kong/plugins/oidc/resty/session/memcached.lua",
+    ["oidc.session.mysql"] = "kong/plugins/oidc/resty/session/mysql.lua",
+    ["oidc.session.postgres"] = "kong/plugins/oidc/resty/session/postgres.lua",
+    ["oidc.session.redis"] = "kong/plugins/oidc/resty/session/redis.lua",
+    ["oidc.session.redis.cluster"] = "kong/plugins/oidc/resty/session/redis/cluster.lua",
+    ["oidc.session.redis.sentinel"] = "kong/plugins/oidc/resty/session/redis/sentinel.lua",
+    ["oidc.session.redis.common"] = "kong/plugins/oidc/resty/session/redis/common.lua",
+    ["oidc.session.shm"] = "kong/plugins/oidc/resty/session/shm.lua",
+    ["oidc.session.utils"] = "kong/plugins/oidc/resty/session/utils.lua",
     }
 }

@@ -44,7 +44,7 @@ local require = require
 local cjson = require("cjson")
 local cjson_s = require("cjson.safe")
 local http = require("resty.http")
-local r_session = require("resty.session")
+local r_session = require("oidc.session")
 local string = string
 local ipairs = ipairs
 local pairs = pairs
@@ -1465,7 +1465,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     local session_error
     local present
     local refreshed
-    session, session_error,present, refreshed = require "resty.session".start({ audience = "oidc-openbanking"})
+    session, session_error,present, refreshed = r_session.start({ audience = "oidc-openbanking"})
     if session == nil then
       log(ERROR, "Error starting session: " .. session_error)
       return nil, session_error, target_url, session
