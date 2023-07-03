@@ -63,6 +63,7 @@ local trim = utils.trim
 
 local NOTICE = ngx.NOTICE
 local WARN   = ngx.WARN
+local DEBUG   = ngx.DEBUG
 
 
 local KEY_SIZE = 32
@@ -786,10 +787,10 @@ local function open(self, remember, meta_only)
   if storage then
     self.info.data = info_data
   end
-
+  log(DEBUG, "audience=", audience)
   local audience_index
   local count = #data
-  if count>0 then
+  if count > 0 then
   for i = 1, count do
     if data[i][2] == audience then
       audience_index = i
