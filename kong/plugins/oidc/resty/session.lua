@@ -789,7 +789,8 @@ local function open(self, remember, meta_only)
 
   local audience_index
   local count = #data
-  for i = 1, count,-1 do
+  if count>0 then
+  for i = 1, count do
     if data[i][2] == audience then
       audience_index = i
       break
@@ -803,11 +804,12 @@ local function open(self, remember, meta_only)
     self.data_index = count + 1
     return nil, "missing session audience", true
   end
+  self.data_index = audience_index
+  end
 
   self.state = STATE_OPEN
   self.data = data
-  self.data_index = audience_index
-
+  
   return true
 end
 
