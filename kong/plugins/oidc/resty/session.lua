@@ -63,7 +63,6 @@ local trim = utils.trim
 
 local NOTICE = ngx.NOTICE
 local WARN   = ngx.WARN
-local DEBUG   = ngx.DEBUG
 
 
 local KEY_SIZE = 32
@@ -769,7 +768,7 @@ local function open(self, remember, meta_only)
   if not plaintext then
     return nil, errmsg(err, "unable to decrypt session data")
   end
-  log(DEBUG, "7777777 endpoint response: ", plaintext)
+
   local data do
     if has_flag(flags, FLAG_DEFLATE) then
       plaintext, err = inflate(plaintext)
@@ -777,7 +776,7 @@ local function open(self, remember, meta_only)
         return nil, errmsg(err, "unable to inflate session data")
       end
     end
-    log(DEBUG, "99999999 endpoint response: ", plaintext)
+
     data, err = decode_json(plaintext)
     if not data then
       return nil, errmsg(err, "unable to json decode session data")
@@ -789,19 +788,14 @@ local function open(self, remember, meta_only)
   end
 
   local audience_index
-  log(DEBUG, "1111111111 endpoint response: ", data[1][2])
   local count = #data
-  log(DEBUG, "8888888 endpoint response: ", count)
-  log(DEBUG, "88888889 endpoint response: ", audience)
-  if count >0 then
-  for i = 1, count do
-    log(DEBUG, "55555555 endpoint response: ", audience)
+  for i = 1, count,-1 do
     if data[i][2] == audience then
       audience_index = i
       break
     end
   end
-  log(DEBUG, "1111111111 endpoint response: ", self.state)
+  
   if not audience_index then
     data[count + 1] = self.data[data_index]
     self.state = STATE_NEW
@@ -809,11 +803,11 @@ local function open(self, remember, meta_only)
     self.data_index = count + 1
     return nil, "missing session audience", true
   end
-  self.data_index = audience_index
-  end
+
   self.state = STATE_OPEN
   self.data = data
-  log(DEBUG, "7474747474 endpoint response: ", self.data_index)
+  self.data_index = audience_index
+
   return true
 end
 
