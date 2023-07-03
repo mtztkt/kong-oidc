@@ -63,6 +63,7 @@ local trim = utils.trim
 
 local NOTICE = ngx.NOTICE
 local WARN   = ngx.WARN
+local DEBUG   = ngx.DEBUG
 
 
 local KEY_SIZE = 32
