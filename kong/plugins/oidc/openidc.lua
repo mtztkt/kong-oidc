@@ -1322,9 +1322,6 @@ local function openidc_logout(opts, session)
     ngx.exit(ngx.OK)
     return
   elseif opts.redirect_after_logout_uri or opts.discovery.end_session_endpoint then
-    ngx.header["Cache-Control"] = "no-cache, no-store"
-    ngx.header["Pragma"] = "no-cache"
-    ngx.header["Expires"] = "-1"
     local uri
     if opts.redirect_after_logout_uri then
       uri = opts.redirect_after_logout_uri
