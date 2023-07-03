@@ -789,10 +789,11 @@ local function open(self, remember, meta_only)
   end
 
   local audience_index
-  log(DEBUG, "1111111111 endpoint response: ", data)
+  log(DEBUG, "1111111111 endpoint response: ", data[1][2])
   local count = #data
   log(DEBUG, "8888888 endpoint response: ", count)
   log(DEBUG, "88888889 endpoint response: ", audience)
+  if count >0 then
   for i = 1, count do
     log(DEBUG, "55555555 endpoint response: ", audience)
     if data[i][2] == audience then
@@ -808,11 +809,11 @@ local function open(self, remember, meta_only)
     self.data_index = count + 1
     return nil, "missing session audience", true
   end
-
+  self.data_index = audience_index
+  end
   self.state = STATE_OPEN
   self.data = data
-  self.data_index = audience_index
-
+  log(DEBUG, "7474747474 endpoint response: ", self.data_index)
   return true
 end
 
