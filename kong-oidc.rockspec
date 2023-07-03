@@ -24,6 +24,7 @@ description = {
 dependencies = {
     "lua-ffi-zlib >= 0.5",
     "lua-resty-openssl >= 0.8.0",
+    "lua-resty-jwt >= 0.2.3"
 }
 build = {
     type = "builtin",
