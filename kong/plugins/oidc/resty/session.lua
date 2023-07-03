@@ -800,7 +800,7 @@ local function open(self, remember, meta_only)
       break
     end
   end
-  
+  log(DEBUG, "1111111111 endpoint response: ", self.state)
   if not audience_index then
     data[count + 1] = self.data[data_index]
     self.state = STATE_NEW
