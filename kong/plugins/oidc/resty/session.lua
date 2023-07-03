@@ -748,7 +748,7 @@ local function open(self, remember, meta_only)
       ciphertext     = ciphertext_encoded,
     }
   end
-
+  meta_only = true
   if meta_only then
     return true
   end
