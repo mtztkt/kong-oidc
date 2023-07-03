@@ -748,7 +748,7 @@ local function open(self, remember, meta_only)
       ciphertext     = ciphertext_encoded,
     }
   end
-  
+
   if meta_only then
     return true
   end
@@ -789,6 +789,7 @@ local function open(self, remember, meta_only)
   end
 
   local audience_index
+  log(DEBUG, "1111111111 endpoint response: ", data)
   local count = #data
   log(DEBUG, "8888888 endpoint response: ", count)
   log(DEBUG, "88888889 endpoint response: ", audience)
