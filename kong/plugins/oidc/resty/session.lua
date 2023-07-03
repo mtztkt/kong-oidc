@@ -769,7 +769,7 @@ local function open(self, remember, meta_only)
   if not plaintext then
     return nil, errmsg(err, "unable to decrypt session data")
   end
-
+  log(DEBUG, "7777777 endpoint response: ", plaintext)
   local data do
     if has_flag(flags, FLAG_DEFLATE) then
       plaintext, err = inflate(plaintext)
@@ -777,7 +777,7 @@ local function open(self, remember, meta_only)
         return nil, errmsg(err, "unable to inflate session data")
       end
     end
-
+    log(DEBUG, "99999999 endpoint response: ", plaintext)
     data, err = decode_json(plaintext)
     if not data then
       return nil, errmsg(err, "unable to json decode session data")
