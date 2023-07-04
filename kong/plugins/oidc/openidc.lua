@@ -1486,6 +1486,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     ", token_expired=", token_expired)
     if(not present and session.state == STATE_NEW) then
       present = true
+      session.state = STATE_OPEN
     end
     session.data.present = present
   end
