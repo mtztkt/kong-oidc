@@ -44,7 +44,7 @@ local require = require
 local cjson = require("cjson")
 local cjson_s = require("cjson.safe")
 local http = require("resty.http")
-local r_session = require("oidc.session")
+local r_session = require("resty.session")
 local string = string
 local ipairs = ipairs
 local pairs = pairs
@@ -57,6 +57,10 @@ local log = ngx.log
 local DEBUG = ngx.DEBUG
 local ERROR = ngx.ERR
 local WARN = ngx.WARN
+
+local STATE_NEW    = "new"
+local STATE_OPEN   = "open"
+local STATE_CLOSED = "closed"
 
 local function token_auth_method_precondition(method, required_field)
   return function(opts)
@@ -1480,6 +1484,9 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     ", opts.renew_access_token_on_expiry=", opts.renew_access_token_on_expiry,
     ", try_to_renew=", try_to_renew,
     ", token_expired=", token_expired)
+    if(not present and session.state == STATE_NEW) then
+      present = true
+    end
     session.data.present = present
   end
 
