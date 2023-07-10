@@ -93,7 +93,6 @@ end
 function M.getSessionOptions(opts)
   if(opts.session_opts~=nil) then
      local data = cjson.decode(opts.session_opts)
-     ngx.log(ngx.DEBUG, data.storage )
     return data
   end
   return nil
