@@ -386,7 +386,9 @@ local function openidc_authorize(opts, session, target_url, prompt)
 
   -- redirect to the /authorization endpoint
   ngx.header["Cache-Control"] = "no-cache, no-store, max-age=0"
-  return ngx.redirect(openidc_combine_uri(opts.discovery.authorization_endpoint, params))
+  --opts.discovery.authorization_endpoint
+  local authorization_endpoint = "http://192.168.1.46:8080/realms/dgpaysit/protocol/openid-connect/auth"
+  return ngx.redirect(openidc_combine_uri(authorization_endpoint, params))
 end
 
 -- parse the JSON result from a call to the OP
