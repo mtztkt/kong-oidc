@@ -1489,6 +1489,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       session.state = STATE_OPEN
     end
     session.data.present = present
+    session:save()
   end
 
   target_url = target_url or ngx.var.request_uri
