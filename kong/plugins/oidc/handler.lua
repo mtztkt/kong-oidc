@@ -166,7 +166,7 @@ function verify_bearer_jwt(oidcConfig)
     return nil
   end
 
-  local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds or oidcConfig.client_id
+  local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds --or oidcConfig.client_id
 
   local jwt_validators = require "resty.jwt-validators"
   jwt_validators.set_system_leeway(120)
