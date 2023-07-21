@@ -31,9 +31,10 @@ end
 
 function handle(oidcConfig)
   local response
+  local err
 
   if oidcConfig.bearer_jwt_auth_enable then
-    response = verify_bearer_jwt(oidcConfig)
+    response,err = verify_bearer_jwt(oidcConfig)
     if response then
       utils.setCredentials(response)
       utils.injectGroups(response, oidcConfig.groups_claim)
@@ -43,6 +44,8 @@ function handle(oidcConfig)
       end
       return
     end
+    if err == 'unauthorized request' then
+      return kong.response.error(ngx.HTTP_UNAUTHORIZED)
   end
 
   if oidcConfig.introspection_endpoint then
@@ -148,7 +151,7 @@ end
 
 function verify_bearer_jwt(oidcConfig)
   if not utils.has_bearer_access_token() then
-    return nil
+    return nil,nil
   end
   -- setup controlled configuration for bearer_jwt_verify
   local opts = {
@@ -163,7 +166,7 @@ function verify_bearer_jwt(oidcConfig)
   local discovery_doc, err = openidc.get_discovery_doc(opts)
   if err then
     kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
-    return nil
+    return nil,nil
   end
 
   local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds --or oidcConfig.client_id
@@ -184,10 +187,10 @@ function verify_bearer_jwt(oidcConfig)
   local json, err, token = openidc.bearer_jwt_verify(opts, claim_spec)
   if err then
     kong.log.err('Bearer JWT verify failed: ' .. err)
-    return nil
+    return nil,'unauthorized request'
   end
 
-  return json
+  return json,nil
 end
 
 return OidcHandler
