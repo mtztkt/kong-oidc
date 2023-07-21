@@ -46,6 +46,7 @@ function handle(oidcConfig)
     end
     if err == 'unauthorized request' then
       return kong.response.error(ngx.HTTP_UNAUTHORIZED)
+    end
   end
 
   if oidcConfig.introspection_endpoint then
