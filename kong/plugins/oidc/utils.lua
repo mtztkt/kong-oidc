@@ -209,6 +209,9 @@ end
 -- verify if tables t1 and t2 have at least one common string item
 -- instead of table, also string can be provided as t1 or t2
 function M.has_common_item(t1, t2)
+  if( t2 == nil) then 
+    return true
+  end
   if t1 == nil or t2 == nil then
     return false
   end

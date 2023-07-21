@@ -172,9 +172,6 @@ function verify_bearer_jwt(oidcConfig)
 
   local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds --or oidcConfig.client_id
 
-  if(allowed_auds == nil) then 
-    ngx.log(ngx.DEBUG, "bartttt")
-  end
   local jwt_validators = require "resty.jwt-validators"
   jwt_validators.set_system_leeway(120)
   local claim_spec = {
