@@ -183,6 +183,7 @@ function verify_bearer_jwt(oidcConfig)
   local claim_spec = {
     -- mandatory for id token: iss, sub, aud, exp, iat
     iss = jwt_validators.equals(discovery_doc.issuer),
+    azp = jwt_validators.equals(oidcConfig.client_id),
     sub = jwt_validators.required(),
     aud = function(val) return utils.has_common_item(val, allowed_auds) end,
     exp = jwt_validators.is_not_expired(),
