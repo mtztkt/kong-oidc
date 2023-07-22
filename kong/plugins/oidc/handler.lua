@@ -44,8 +44,14 @@ function handle(oidcConfig)
       end
       return
     end
-    if err == 'unauthorized request' then
-      return kong.response.error(ngx.HTTP_UNAUTHORIZED)
+    if err then
+      if err == 'unauthorized request' then
+        return kong.response.error(ngx.HTTP_UNAUTHORIZED)
+      end
+
+      if err == 'not_found' then
+        return kong.response.error(ngx.HTTP_NOT_FOUND)
+      end
     end
   end
 
@@ -167,7 +173,7 @@ function verify_bearer_jwt(oidcConfig)
   local discovery_doc, err = openidc.get_discovery_doc(opts)
   if err then
     kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
-    return nil,nil
+    return nil,'not_found'
   end
 
   local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds --or oidcConfig.client_id
