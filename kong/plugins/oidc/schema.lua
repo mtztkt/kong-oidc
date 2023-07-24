@@ -185,6 +185,11 @@ return {
             }
           },
           {
+            ignore_request_methods = {
+              type = "string"
+            }
+          },
+          {
             filters = {
               type = "string"
             }

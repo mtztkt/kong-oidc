@@ -14,4 +14,18 @@ function M.shouldProcessRequest(config)
   return not shouldIgnoreRequest(config.filters)
 end
 
+local function shouldIgnoreRequestMethod(patterns)
+  if (patterns) then
+    for _, pattern in ipairs(patterns) do
+      local isMatching = not (string.find(ngx.var.request_method, pattern) == nil)
+      if (isMatching) then return true end
+    end
+  end
+  return false
+end
+
+function M.shouldProcessRequestMethod(config)
+  return  shouldIgnoreRequestMethod(config.ignore_request_methods)
+end
+
 return M

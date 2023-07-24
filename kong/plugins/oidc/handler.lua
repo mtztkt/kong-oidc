@@ -19,6 +19,10 @@ function OidcHandler:access(config)
     return
   end
 
+  if filter.shouldProcessRequestMethod(oidcConfig) then
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring request method: ".. ngx.var.request_method, .."path: " .. ngx.var.request_uri)
+  end
+
   if filter.shouldProcessRequest(oidcConfig) then
     session.configure(config)
     handle(oidcConfig)
@@ -97,6 +101,7 @@ function handle(oidcConfig)
 end
 
 function make_oidc(oidcConfig)
+  ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested method: " .. ngx.var.request_method)
   ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
   local session_opts = utils.getSessionOptions(oidcConfig)
   local unauth_action = oidcConfig.unauth_action
