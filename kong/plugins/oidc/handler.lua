@@ -20,7 +20,8 @@ function OidcHandler:access(config)
   end
 
   if filter.shouldProcessRequestMethod(oidcConfig) then
-    ngx.log(ngx.DEBUG, "OidcHandler ignoring request method: ".. ngx.var.request_method, .."path: " .. ngx.var.request_uri)
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring request method: ".. ngx.var.request_method)
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring request path: " .. ngx.var.request_uri)
   end
 
   if filter.shouldProcessRequest(oidcConfig) then
