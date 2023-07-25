@@ -16,7 +16,9 @@ end
 
 local function shouldIgnoreRequestMethod(patterns)
   if (patterns) then
+    ngx.log(ngx.DEBUG, "3121212OidcHandler ignoring request method: ".. ngx.var.request_method)
     for _, pattern in ipairs(patterns) do
+      ngx.log(ngx.DEBUG, "421212OidcHandler ignoring request method: ".. ngx.var.request_method)
       local isMatching = not (string.find(ngx.var.request_method, pattern) == nil)
       if (isMatching) then 
         ngx.log(ngx.DEBUG, "121212OidcHandler ignoring request method: ".. ngx.var.request_method)
