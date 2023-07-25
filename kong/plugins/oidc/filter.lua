@@ -15,6 +15,7 @@ function M.shouldProcessRequest(config)
 end
 
 local function shouldIgnoreRequestMethod(patterns)
+  ngx.log(ngx.DEBUG, "5121212OidcHandler ignoring request method: ".. ngx.var.request_method)
   if (patterns) then
     ngx.log(ngx.DEBUG, "3121212OidcHandler ignoring request method: ".. ngx.var.request_method)
     for _, pattern in ipairs(patterns) do
