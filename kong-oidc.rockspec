@@ -18,6 +18,7 @@ build = {
     ["kong.plugins.oidc.schema"] = "kong/plugins/oidc/schema.lua",
     ["kong.plugins.oidc.session"] = "kong/plugins/oidc/session.lua",
     ["kong.plugins.oidc.utils"] = "kong/plugins/oidc/utils.lua",
-    ["kong.plugins.oidc.openidc"] = "kong/plugins/oidc/openidc.lua"
+    ["kong.plugins.oidc.openidc"] = "kong/plugins/oidc/openidc.lua",
+    ["kong.plugins.api.openidc"] = "kong/plugins/oidc/api.lua"
     }
 }
