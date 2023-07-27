@@ -1,4 +1,5 @@
 local handler = require "kong.plugins.oidc.handler"
+local openidc = require "kong.plugins.oidc.openidc"
 local http = require("resty.http")
 local function find_plugin()
     for plugin, err in kong.db.plugins:each(1000) do
