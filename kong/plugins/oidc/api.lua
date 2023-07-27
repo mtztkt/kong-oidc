@@ -79,7 +79,7 @@ local function find_plugin()
     },
   
     ["/token"] = {
-      GET = function(self)
+      POST = function(self)
         local plugin, err = find_plugin()
         if err then
           return kong.response.exit(500, { message = err })
@@ -90,7 +90,7 @@ local function find_plugin()
         local conf = plugin.config
        
   
-        local data = { client_id = conf.client_id,}
+        local data = { client_id = self.params.client_id,}
         
         return kong.response.exit(200, { data = data })
       end,
