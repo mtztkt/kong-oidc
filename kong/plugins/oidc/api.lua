@@ -38,8 +38,6 @@ local function find_plugin()
             username = tostring(self.params.username),
             password = tostring(self.params.password)
           }
-
-          kong.log.debug("111 endpoint call: ", ngx.encode_args(body))
         
         local headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded"
@@ -56,7 +54,7 @@ local function find_plugin()
           if not res then
             err = "accessing  endpoint (" .. discovery_doc.token_endpoint .. ") failed: " .. err
             kong.log.err( err)
-            return kong.response.exit(res.status)
+            return kong.response.exit(404)
           end
         
         return kong.response.exit(200,  res)
