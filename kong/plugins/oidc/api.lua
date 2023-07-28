@@ -35,8 +35,8 @@ local function find_plugin()
             grant_type = "password",
             client_id = conf.client_id,
             client_secret = conf.client_secret,
-            username = self.params.username,
-            password = self.params.password,
+            username = tostring(self.params.username),
+            password = tostring(self.params.password)
           }
 
           kong.log.debug("111 endpoint call: ", ngx.encode_args(body))
