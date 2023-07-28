@@ -30,6 +30,8 @@ local function find_plugin()
           kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
           return kong.response.exit(404)
         end
+
+        kong.log.debug('Discovery document:', discovery_doc)
        
         local body = {
             grant_type = "password",
@@ -38,6 +40,8 @@ local function find_plugin()
             username = self.params.username,
             password = self.params.password,
           }
+
+          kong.log.debug('Request body:', body)
         
         local headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded"
