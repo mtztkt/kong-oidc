@@ -41,7 +41,7 @@ local function find_plugin()
             password = self.params.password,
           }
 
-          kong.log.debug('Request body:' .. body)
+          kong.log.debug('Request body:' .. body.username)
         
         local headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded"
