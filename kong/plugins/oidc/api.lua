@@ -31,7 +31,7 @@ local function find_plugin()
           return kong.response.exit(404)
         end
 
-        ngx.log(ngx.DEBUG, "1response data: " .. discovery_doc)
+        ngx.log(ngx.DEBUG, "1response data: ")
        
         local body = {
             grant_type = "password",
