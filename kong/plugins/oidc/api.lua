@@ -30,8 +30,6 @@ local function find_plugin()
           kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
           return kong.response.exit(404)
         end
-
-        ngx.log(ngx.DEBUG, "1response data: " .. discovery_doc.token_endpoint)
        
         local body = {
             grant_type = "password",
@@ -41,7 +39,7 @@ local function find_plugin()
             password = self.params.password,
           }
 
-          kong.log.debug('Request body:' .. body.username)
+          kong.log.debug("111 endpoint call: ", ngx.encode_args(body))
         
         local headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded"
