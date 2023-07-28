@@ -31,7 +31,7 @@ local function find_plugin()
           return kong.response.exit(404)
         end
 
-        ngx.log(ngx.DEBUG, "1response data: ")
+        ngx.log(ngx.DEBUG, "1response data: " .. discovery_doc.token_endpoint)
        
         local body = {
             grant_type = "password",
@@ -41,7 +41,7 @@ local function find_plugin()
             password = self.params.password,
           }
 
-          kong.log.debug('Request body:', body)
+          kong.log.debug('Request body:' .. body)
         
         local headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded"
