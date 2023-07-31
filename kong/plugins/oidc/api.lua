@@ -83,8 +83,12 @@ local function find_plugin()
             kong.log.err( err)
             return kong.response.exit(404)
           end
-        
-        return kong.response.exit(200,   openidc_parse_json_response(res))
+          local parseResponse,parseError = openidc_parse_json_response(res)
+          if parseError then 
+              kong.log.err( err)
+              return kong.response.exit(500)
+          end
+        return kong.response.exit(200,   parseResponse)
       end,
     }
   }
