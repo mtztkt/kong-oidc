@@ -57,7 +57,7 @@ local function find_plugin()
             return kong.response.exit(404)
           end
         
-        return kong.response.exit(200,  res)
+        return kong.response.exit(200,   { message = "sanity test for host " .. host .. " passed"})
       end,
     }
   }
