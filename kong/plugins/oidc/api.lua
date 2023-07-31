@@ -1,6 +1,8 @@
 local handler = require "kong.plugins.oidc.handler"
 local openidc = require "kong.plugins.oidc.openidc"
 local http = require("resty.http")
+local cjson = require("cjson")
+local cjson_s = require("cjson.safe")
 local function find_plugin()
     for plugin, err in kong.db.plugins:each(1000) do
       if err then
