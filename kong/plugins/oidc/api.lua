@@ -13,6 +13,31 @@ local function find_plugin()
     end
   end
 
+  local function openidc_parse_json_response(response, ignore_body_on_success)
+    local ignore_body_on_success = ignore_body_on_success or false
+  
+    local err
+    local res
+  
+    -- check the response from the OP
+    if response.status ~= 200 then
+      err = "response indicates failure, status=" .. response.status .. ", body=" .. response.body
+    else
+      if ignore_body_on_success then
+        return nil, nil
+      end
+  
+      -- decode the response and extract the JSON object
+      res = cjson_s.decode(response.body)
+  
+      if not res then
+        err = "JSON decoding failed"
+      end
+    end
+  
+    return res, err
+  end
+
   return {
     ["/token"] = {
       POST = function(self)
@@ -57,7 +82,7 @@ local function find_plugin()
             return kong.response.exit(404)
           end
         
-        return kong.response.exit(200,   { message = "sanity test for host " .. host .. " passed"})
+        return kong.response.exit(200,   openidc_parse_json_response(res))
       end,
     }
   }
