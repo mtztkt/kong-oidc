@@ -11,6 +11,27 @@ local openidc = require("kong.plugins.oidc.openidc")
 function OidcHandler:access(config)
   local oidcConfig = utils.get_options(config, ngx)
 
+  local service = kong.router.get_service()
+
+    if service then
+        kong.log.info("Service ID: " .. service.id)
+        kong.log.info("Service Name: " .. service.name)
+        -- Diğer service özelliklerine erişim sağlanabilir
+    else
+        kong.log.info("Request did not match any service.")
+    end
+
+  local route = kong.router.get_route()
+
+    if route then
+        kong.log.info("Route ID: " .. route.id)
+        kong.log.info("Route Name: " .. route.name)
+        kong.log.info("Route Methods: " .. table.concat(route.methods, ", "))
+        kong.log.info("Route Paths: " .. table.concat(route.paths, ", "))
+    else
+        kong.log.info("Request did not match any route.")
+    end
+
   -- partial support for plugin chaining: allow skipping requests, where higher priority
   -- plugin has already set the credentials. The 'config.anomyous' approach to define
   -- "and/or" relationship between auth plugins is not utilized
