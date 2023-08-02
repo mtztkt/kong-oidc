@@ -28,4 +28,34 @@ function M.shouldProcessRequestMethod(config)
   return  shouldIgnoreRequestMethod(config.ignore_request_methods)
 end
 
+local function shouldIgnoreServices(patterns)
+  if (patterns) then
+    local service = kong.router.get_service()
+    for _, pattern in ipairs(patterns) do
+      local isMatching = service.name == pattern
+      if (isMatching) then return true end
+    end
+  end
+  return false
+end
+
+function M.shouldProcessServices(config)
+  return  shouldIgnoreServices(config.ignore_services)
+end
+
+local function shouldIgnoreRoutes(patterns)
+  if (patterns) then
+    local route = kong.router.get_route()
+    for _, pattern in ipairs(patterns) do
+      local isMatching = route.name == pattern
+      if (isMatching) then return true end
+    end
+  end
+  return false
+end
+
+function M.shouldProcessRoutes(config)
+  return  shouldIgnoreRoutes(config.ignore_routes)
+end
+
 return M

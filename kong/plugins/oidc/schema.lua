@@ -201,6 +201,18 @@ return {
             }
           },
           {
+            ignore_services = {
+              type = "string",
+              required = false
+            }
+          },
+          {
+            ignore_routes = {
+              type = "string",
+              required = false
+            }
+          },
+          {
             userinfo_header_name = {
               type = "string",
               required = false,

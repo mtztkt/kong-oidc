@@ -65,6 +65,8 @@ function M.get_options(config, ngx)
     recovery_page_path = config.recovery_page_path,
     filters = parseFilters((config.filters or "") .. "," .. (config.ignore_auth_filters or "")),
     ignore_request_methods = parseFilters(config.ignore_request_methods or ""),
+    ignore_services =  parseFilters(config.ignore_services or ""),
+    ignore_routes =  parseFilters(config.ignore_routes or ""),
     logout_path = config.logout_path,
     revoke_tokens_on_logout = config.revoke_tokens_on_logout == "yes",
     redirect_after_logout_uri = config.redirect_after_logout_uri,

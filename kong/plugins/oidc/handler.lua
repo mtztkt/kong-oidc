@@ -38,6 +38,16 @@ function OidcHandler:access(config)
     return
   end
 
+  if filter.shouldProcessServices(oidcConfig) then
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring service: " .. service.name)
+    return
+  end
+
+  if filter.shouldProcessRoutes(oidcConfig) then
+    ngx.log(ngx.DEBUG, "OidcHandler ignoring route: " .. route.name)
+    return
+  end
+
   if filter.shouldProcessRequestMethod(oidcConfig) then
     ngx.log(ngx.DEBUG, "OidcHandler ignoring request method: ".. ngx.var.request_method)
     ngx.log(ngx.DEBUG, "OidcHandler ignoring request path: " .. ngx.var.request_uri)
