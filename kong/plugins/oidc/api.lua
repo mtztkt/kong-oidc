@@ -63,7 +63,8 @@ local function find_plugin()
             client_id = conf.client_id,
             client_secret = conf.client_secret,
             username = tostring(self.params.username),
-            password = tostring(self.params.password)
+            password = tostring(self.params.password),
+            scope = (tostring(self.params.scope) and tostring(self.params.scope)) or (conf.scope and conf.scope) or "openid email profile",
           }
         
         local headers = {

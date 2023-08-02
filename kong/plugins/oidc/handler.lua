@@ -26,8 +26,6 @@ function OidcHandler:access(config)
     if route then
         kong.log.info("Route ID: " .. route.id)
         kong.log.info("Route Name: " .. route.name)
-        kong.log.info("Route Methods: " .. table.concat(route.methods, ", "))
-        kong.log.info("Route Paths: " .. table.concat(route.paths, ", "))
     else
         kong.log.info("Request did not match any route.")
     end
