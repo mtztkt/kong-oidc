@@ -59,7 +59,7 @@ function M.shouldProcessRoutes(config)
 end
 
 
-local function shouldIgnoreRequestMethod(patterns)
+local function shouldIgnoreRequestRegex(patterns)
   if (patterns) then
     for _, pattern in ipairs(patterns) do
       local isMatching = string.match(kong.request.get_path(), pattern)
