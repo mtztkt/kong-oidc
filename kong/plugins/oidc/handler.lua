@@ -35,7 +35,7 @@ function OidcHandler:access(config)
   if ignore_request_regex then
     local path = kong.request.get_path()
 
-    if string.match(path, static_pattern) then
+    if string.match(path, ignore_request_regex) then
         kong.log.info("ignore_request_regex detected: ", path)
         return
     end
