@@ -11,14 +11,9 @@ local openidc = require("kong.plugins.oidc.openidc")
 function doesMatch(str,pattern)
   local isMatch =  string.match(str, pattern) and true or false
   ngx.log(ngx.DEBUG, "33333333: " .. tostring(isMatch))
-  local match1,match2 = string.match(str, pattern)
+  local match1 = string.match(str, pattern)
   if match1 then
     ngx.log(ngx.DEBUG, "747474: " .. tostring(match1))
-    
-  end
-
-  if match2 then
-    ngx.log(ngx.DEBUG, "676767: " .. tostring(match2))
     
   end
   return isMatch
@@ -50,7 +45,7 @@ function OidcHandler:access(config)
   ngx.log(ngx.DEBUG, "8888888888: " .. ignore_request_regex)
   if ignore_request_regex then
     local path = kong.request.get_path()
-    ngx.log(ngx.DEBUG, "999999999: " .. ignore_request_regex)
+    ngx.log(ngx.DEBUG, "999999999: " .. path)
     if doesMatch(path, ignore_request_regex) then
       ngx.log(ngx.DEBUG, "666666: " .. path)
       kong.log.info("ignore_request_regex detected: ", path)
