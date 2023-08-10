@@ -33,10 +33,10 @@ function OidcHandler:access(config)
   local ignore_request_regex = oidcConfig.ignore_request_regex
   ngx.log(ngx.DEBUG, "8888888888: " .. ignore_request_regex)
   if ignore_request_regex then
-    local path = kong.request.get_path()
+    local path = "/static/js/main.5b9e5140.js"
     ngx.log(ngx.DEBUG, "999999999: " .. path)
-    if string.match(path, ignore_request_regex) then
-        kong.log.info("ignore_request_regex detected: ", path)
+    if string.match(path, "^/(static|assets)/(js|css|media)/") then
+        ngx.log(ngx.DEBUG, "999999999: " .. path)
         return
     end
    end
