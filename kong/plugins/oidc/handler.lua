@@ -9,8 +9,18 @@ local openidc = require("kong.plugins.oidc.openidc")
 
 
 function doesMatch(str,pattern)
-  local isMatch =  string.find(str, pattern) and true or false
+  local isMatch =  string.match(str, pattern) and true or false
   ngx.log(ngx.DEBUG, "33333333: " .. tostring(isMatch))
+  local match1,match2 = string.match(str, pattern)
+  if match1 then
+    ngx.log(ngx.DEBUG, "747474: " .. tostring(match1))
+    
+  end
+
+  if match2 then
+    ngx.log(ngx.DEBUG, "676767: " .. tostring(match2))
+    
+  end
   return isMatch
 end
 
