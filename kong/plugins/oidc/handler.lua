@@ -10,7 +10,7 @@ local openidc = require("kong.plugins.oidc.openidc")
 
 function doesMatch(str,pattern)
   local isMatch =  string.match(str, pattern) and true or false
-  ngx.log(ngx.DEBUG, "33333333: " .. isMatch)
+  ngx.log(ngx.DEBUG, "33333333: " .. tostring(isMatch))
   return match
 end
 
