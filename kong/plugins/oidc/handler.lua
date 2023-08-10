@@ -34,7 +34,7 @@ function OidcHandler:access(config)
   ngx.log(ngx.DEBUG, "8888888888: " .. ignore_request_regex)
   if ignore_request_regex then
     local path = kong.request.get_path()
-
+    ngx.log(ngx.DEBUG, "999999999: " .. path)
     if string.match(path, ignore_request_regex) then
         kong.log.info("ignore_request_regex detected: ", path)
         return
