@@ -7,18 +7,6 @@ local filter = require("kong.plugins.oidc.filter")
 local session = require("kong.plugins.oidc.session")
 local openidc = require("kong.plugins.oidc.openidc")
 
-
-function doesMatch(str,pattern)
-  local isMatch =  string.match(str, pattern) and true or false
-  ngx.log(ngx.DEBUG, "33333333: " .. tostring(isMatch))
-  local match1 = string.match(str, pattern)
-  if match1 then
-    ngx.log(ngx.DEBUG, "747474: " .. tostring(match1))
-    
-  end
-  return isMatch
-end
-
 function OidcHandler:access(config)
   local oidcConfig = utils.get_options(config, ngx)
 
@@ -41,18 +29,10 @@ function OidcHandler:access(config)
         kong.log.info("Request did not match any route.")
     end
   
-  local ignore_request_regex = oidcConfig.ignore_request_regex
-  ngx.log(ngx.DEBUG, "8888888888: " .. ignore_request_regex)
-  if ignore_request_regex then
-    local path = kong.request.get_path()
-    ngx.log(ngx.DEBUG, "999999999: " .. path)
-    if doesMatch(path, ignore_request_regex) then
-      ngx.log(ngx.DEBUG, "666666: " .. path)
-      kong.log.info("ignore_request_regex detected: ", path)
-      return
-    end
-    ngx.log(ngx.DEBUG, "777777777: " .. path)
-   end
+   if filter.shouldProcessRequestRegex(oidcConfig) then
+    ngx.log(ngx.DEBUG, "ignore_request_regex detected service: " .. kong.request.get_path())
+    return
+  end
 
 
   -- partial support for plugin chaining: allow skipping requests, where higher priority

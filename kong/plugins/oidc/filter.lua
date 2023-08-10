@@ -58,4 +58,19 @@ function M.shouldProcessRoutes(config)
   return  shouldIgnoreRoutes(config.ignore_routes)
 end
 
+
+local function shouldIgnoreRequestMethod(patterns)
+  if (patterns) then
+    for _, pattern in ipairs(patterns) do
+      local isMatching = string.match(kong.request.get_path(), pattern)
+      if (isMatching) then return true end
+    end
+  end
+  return false
+end
+
+function M.shouldProcessRequestRegex(config)
+  return  shouldIgnoreRequestRegex(config.ignore_request_regex)
+end
+
 return M

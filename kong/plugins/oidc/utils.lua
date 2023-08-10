@@ -63,7 +63,7 @@ function M.get_options(config, ngx)
     use_jwks = config.use_jwks,
     token_endpoint_auth_method = config.token_endpoint_auth_method,
     recovery_page_path = config.recovery_page_path,
-    ignore_request_regex = config.ignore_request_regex,
+    ignore_request_regex = parseFilters(config.ignore_request_regex or ""), 
     filters = parseFilters((config.filters or "") .. "," .. (config.ignore_auth_filters or "")),
     ignore_request_methods = parseFilters(config.ignore_request_methods or ""),
     ignore_services =  parseFilters(config.ignore_services or ""),
