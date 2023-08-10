@@ -29,6 +29,18 @@ function OidcHandler:access(config)
     else
         kong.log.info("Request did not match any route.")
     end
+  
+  local ignore_request_regex = oidcConfig.ignore_request_regex
+  
+  if ignore_request_regex then
+    local path = kong.request.get_path()
+
+    if string.match(path, static_pattern) then
+        kong.log.info("ignore_request_regex detected: ", path)
+        return
+    end
+   end
+
 
   -- partial support for plugin chaining: allow skipping requests, where higher priority
   -- plugin has already set the credentials. The 'config.anomyous' approach to define

@@ -190,6 +190,12 @@ return {
             }
           },
           {
+            ignore_request_regex = {
+              type = "string",
+              required = false
+            }
+          },
+          {
             filters = {
               type = "string"
             }
