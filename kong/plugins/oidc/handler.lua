@@ -36,7 +36,7 @@ function OidcHandler:access(config)
     local path = "/static/js/main.5b9e5140.js"
     ngx.log(ngx.DEBUG, "999999999: " .. path)
     if string.match(path, "^/(static|assets)/(js|css|media)/") then
-        ngx.log(ngx.DEBUG, "999999999: " .. path)
+        ngx.log(ngx.DEBUG, "44444444: " .. path)
         return
     end
    end
