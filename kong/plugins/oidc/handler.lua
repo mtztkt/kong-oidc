@@ -214,6 +214,7 @@ function verify_bearer_jwt(oidcConfig)
   local discovery_doc, err = openidc.get_discovery_doc(opts)
   if err then
     kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
+    ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
     return nil,'not_found'
   end
 
@@ -236,6 +237,13 @@ function verify_bearer_jwt(oidcConfig)
   local json, err, token = openidc.bearer_jwt_verify(opts, claim_spec)
   if err then
     kong.log.err('Bearer JWT verify failed: ' .. err)
+    ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
+    return nil,'unauthorized request'
+  end
+
+  res, err = openidc.introspect(oidcConfig)
+  if err then
+    ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
     return nil,'unauthorized request'
   end
 
