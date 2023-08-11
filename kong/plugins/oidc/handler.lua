@@ -246,7 +246,7 @@ function verify_bearer_jwt(oidcConfig)
     ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
     return nil,'unauthorized request'
   end
-
+  ngx.log(ngx.DEBUG, "token validated")
   return json,nil
 end
 
