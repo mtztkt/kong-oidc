@@ -1288,10 +1288,11 @@ local openidc_transparent_pixel = "\137\080\078\071\013\010\026\010\000\000\000\
 -- handle logout
 local function openidc_logout(opts, session)
   local session_token = session.data.enc_id_token
+  log(DEBUG, "on_logout session_token: " .. session_token)
   local access_token = session.data.access_token
   local refresh_token = session.data.refresh_token
   local err
-
+ 
   if opts.lifecycle and opts.lifecycle.on_logout then
     err = opts.lifecycle.on_logout(session)
     if err then
