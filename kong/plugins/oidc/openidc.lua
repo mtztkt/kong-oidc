@@ -1288,7 +1288,7 @@ local openidc_transparent_pixel = "\137\080\078\071\013\010\026\010\000\000\000\
 -- handle logout
 local function openidc_logout(opts, session)
   local session_token = session.data.enc_id_token
-  log(DEBUG, "on_logout session_token: " .. session_token)
+  log(DEBUG, "on_logout session_token: " .. (session_token or "nil"))
   local access_token = session.data.access_token
   local refresh_token = session.data.refresh_token
   local err
@@ -1490,7 +1490,6 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       session.state = STATE_OPEN
     end
     session.data.present = present
-    session:save()
   end
 
   target_url = target_url or ngx.var.request_uri
