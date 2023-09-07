@@ -1454,6 +1454,10 @@ local function is_session(o)
   return o ~= nil and o.start and type(o.start) == "function"
 end
 
+local function removeTrailingSlash(str)
+  return str:gsub("/$", "")
+end
+
 -- main routine for OpenID Connect user authentication
 function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
@@ -1499,8 +1503,8 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   -- see if this is a request to the redirect_uri i.e. an authorization response
   local path = openidc_get_path(target_url)
-  log(DEBUG, "8888path (" .. path .. ") is ".. openidc_get_redirect_uri_path(opts) )
-  if path == openidc_get_redirect_uri_path(opts) then
+  local redirect_uri_path = openidc_get_redirect_uri_path(opts)
+  if removeTrailingSlash(path) == removeTrailingSlash(redirect_uri_path) then
     log(DEBUG, "Redirect URI path (" .. path .. ") is currently navigated -> Processing authorization response coming from OP")
 
     if not session.data.present then
