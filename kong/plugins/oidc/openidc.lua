@@ -1499,7 +1499,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   -- see if this is a request to the redirect_uri i.e. an authorization response
   local path = openidc_get_path(target_url)
-  log(DEBUG, "8888path (" .. path .. ") is ".. openidc_get_redirect_uri_path(opts) .. "))
+  log(DEBUG, "8888path (" .. path .. ") is ".. openidc_get_redirect_uri_path(opts) )
   if path == openidc_get_redirect_uri_path(opts) then
     log(DEBUG, "Redirect URI path (" .. path .. ") is currently navigated -> Processing authorization response coming from OP")
 
