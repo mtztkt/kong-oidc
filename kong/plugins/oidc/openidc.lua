@@ -382,7 +382,12 @@ local function openidc_authorize(opts, session, target_url, prompt)
     end
   end
 
-  session:save()
+  local saveSession
+  saveSession, err = session:save()
+  if err then
+    log(ERROR, "failed to save session: " .. err)
+    return nil, err
+  end
 
   -- redirect to the /authorization endpoint
   ngx.header["Cache-Control"] = "no-cache, no-store, max-age=0"
@@ -1206,7 +1211,12 @@ local function openidc_authorization_response(opts, session)
   end
 
   -- save the session with the obtained id_token
-  session:save()
+  local saveSession
+  saveSession, err = session:save()
+  if err then
+    log(ERROR, "failed to save session: " .. err)
+    return nil, err
+  end
 
   -- redirect to the URL that was accessed originally
   log(DEBUG, "OIDC Authorization Code Flow completed -> Redirecting to original URL (" .. session.data.original_url .. ")")
@@ -1421,18 +1431,11 @@ local function openidc_access_token(opts, session, try_to_renew)
   end
 
   -- save the session with the new access_token and optionally the new refresh_token and id_token using a new sessionid
-  local regenerated
-  regenerated, err = session:regenerate()
+  local saveSession
+  saveSession, err = session:save()
   if err then
-    log(ERROR, "failed to regenerate session: " .. err)
+    log(ERROR, "failed to save session: " .. err)
     return nil, err
-  end
-  if opts.lifecycle and opts.lifecycle.on_regenerated then
-    err = opts.lifecycle.on_regenerated(session)
-    if err then
-      log(WARN, "failed in `on_regenerated` handler: " .. err)
-      return nil, err
-    end
   end
 
   return session.data.access_token, err
