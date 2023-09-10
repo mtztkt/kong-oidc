@@ -1297,9 +1297,8 @@ local openidc_transparent_pixel = "\137\080\078\071\013\010\026\010\000\000\000\
 
 -- handle logout
 local function openidc_logout(opts, session)
-  local session_token = session.data.enc_id_token or session:get("enc_id_token")
+  local session_token = session.data.enc_id_token
   log(DEBUG, "on_logout session.data.enc_id_token: " .. (session.data.enc_id_token or "nil"))
-  log(DEBUG, "on_logout session.enc_id_token: " .. (session:get("enc_id_token") or "nil"))
   local access_token = session.data.access_token
   local refresh_token = session.data.refresh_token
   local err
@@ -1425,7 +1424,6 @@ local function openidc_access_token(opts, session, try_to_renew)
     log(DEBUG, "id_token refreshed: ", json.id_token)
     if store_in_session(opts, 'enc_id_token') then
       session.data.enc_id_token = json.id_token
-      session:set("enc_id_token", json.id_token)
     end
     if store_in_session(opts, 'id_token') then
       session.data.id_token = id_token
@@ -1482,12 +1480,11 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     end
     log(DEBUG,
     "session log =", 1,
-    "session.data.present=", present,
-    "session.data.refreshed=", refreshed,
-    "session.data.err=", session_error,
-    "session.state=", session.state,
+    ", session.data.present=", present,
+    ", session.data.refreshed=", refreshed,
+    ", session.data.err=", session_error,
+    ", session.state=", session.state,
     ", session.data.enc_id_token=", session.data.enc_id_token ~= nil,
-    ", session.enc_id_token=",   session:get("enc_id_token") ~= nil,
     ", session.data.id_token=", session.data.id_token ~= nil,
     ", session.data.authenticated=", session.data.authenticated,
     ", opts.force_reauthorize=", opts.force_reauthorize,
@@ -1551,11 +1548,10 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   log(DEBUG,
     "session log =", 2,
-    "session.data.present=", session.data.present,
-    "session.state=", session.state,
+    ", session.data.present=", session.data.present,
+    ", session.state=", session.state,
     ", session.data.id_token=", session.data.id_token ~= nil,
     ", session.data.enc_id_token=", session.data.enc_id_token ~= nil,
-    ", session.enc_id_token=",   session:get("enc_id_token") ~= nil,
     ", session.data.authenticated=", session.data.authenticated,
     ", opts.force_reauthorize=", opts.force_reauthorize,
     ", opts.renew_access_token_on_expiry=", opts.renew_access_token_on_expiry,
