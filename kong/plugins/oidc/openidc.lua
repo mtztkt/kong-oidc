@@ -1191,7 +1191,6 @@ local function openidc_authorization_response(opts, session)
 
   if store_in_session(opts, 'enc_id_token') then
     session.data.enc_id_token = json.id_token
-    session:set("enc_id_token",json.id_token)
   end
 
   if store_in_session(opts, 'access_token') then
@@ -1485,7 +1484,6 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     ", session.data.refreshed=", refreshed,
     ", session.data.err=", session_error,
     ", session.state=", session.state,
-    ", session.enc_id_token=", session:get("enc_id_token")~= nil,
     ", session.data.enc_id_token=", session.data.enc_id_token ~= nil,
     ", session.data.id_token=", session.data.id_token ~= nil,
     ", session.data.authenticated=", session.data.authenticated,
