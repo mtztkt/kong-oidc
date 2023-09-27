@@ -9,7 +9,7 @@ local function find_plugin()
         return nil, err
       end
   
-      if plugin.name == "oidc" and plugin.service_id == nil then
+      if plugin.name == "oidc" then
         return plugin
       end
     end
