@@ -99,9 +99,9 @@ function openidc.cache_set(type, key, value, exp)
 end
 
 local function openidc_cache_set(type, key, value, exp)
-  local dict = ngx.shared[type]
+  local dict = ngx.shared.kong
   if dict and (exp > 0) then
-    local success, err, forcible = dict:set(key, value, exp)
+    local success, err, forcible = dict:set(type .. '#' ..key, value, exp)
     log(DEBUG, "cache set: success=", success, " err=", err, " forcible=", forcible)
   end
 end
@@ -111,10 +111,10 @@ function openidc.cache_get(type, key)
 end
 -- retrieve value from server-wide cache if available
 local function openidc_cache_get(type, key)
-  local dict = ngx.shared[type]
+  local dict = ngx.shared.kong
   local value
   if dict then
-    value = dict:get(key)
+    value = dict:get(type .. '#' ..key)
     if value then log(DEBUG, "cache hit: type=", type, " key=", key) end
   end
   return value
@@ -122,7 +122,7 @@ end
 
 -- invalidate values of server-wide cache
 local function openidc_cache_invalidate(type)
-  local dict = ngx.shared[type]
+  local dict = ngx.shared.kong
   if dict then
     log(DEBUG, "flushing cache for " .. type)
     dict.flush_all(dict)
