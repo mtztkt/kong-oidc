@@ -50,6 +50,7 @@ function M.get_options(config, ngx)
     client_secret = config.client_secret,
     discovery = config.discovery,
     introspection_endpoint = config.introspection_endpoint,
+    issuer = config.issuer,
     introspection_endpoint_auth_method = config.introspection_endpoint_auth_method,
     introspection_cache_ignore = config.introspection_cache_ignore,
     timeout = config.timeout,
@@ -92,6 +93,10 @@ function M.get_options(config, ngx)
     session_opts = config.session_opts,
     use_nonce = config.use_nonce == "yes"
   }
+end
+
+function M.isNullOrWhitespace(str)
+  return str == nil or str:match("^%s*$") ~= nil
 end
 
 function M.getSessionOptions(opts)

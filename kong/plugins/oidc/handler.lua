@@ -213,19 +213,23 @@ function verify_bearer_jwt(oidcConfig)
     ssl_verify = oidcConfig.ssl_verify
   }
 
+  local issuer = oidcConfig.issuer
+ 
+  if utils.isNullOrWhitespace(issuer) then
   local discovery_doc, err = openidc.get_discovery_doc(opts)
-  if err then
-    kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
-    return nil,'not_found'
-  end
-
+    if err then
+      kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
+      return nil,'not_found'
+    end
+    issuer = discovery_doc.issuer
+  end 
   local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds --or oidcConfig.client_id
 
   local jwt_validators = require "resty.jwt-validators"
   jwt_validators.set_system_leeway(120)
   local claim_spec = {
     -- mandatory for id token: iss, sub, aud, exp, iat
-    iss = jwt_validators.equals(discovery_doc.issuer),
+    iss = jwt_validators.equals(issuer),
     azp = jwt_validators.equals(oidcConfig.client_id),
     sub = jwt_validators.required(),
     aud = function(val) return utils.has_common_item(val, allowed_auds) end,
