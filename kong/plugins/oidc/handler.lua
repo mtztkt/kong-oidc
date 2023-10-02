@@ -75,7 +75,7 @@ function handle(oidcConfig)
 
   if oidcConfig.bearer_jwt_auth_enable then
     response,err = verify_bearer_jwt(oidcConfig)
-    return;
+    return
     if response then
       utils.setCredentials(response)
       utils.injectGroups(response, oidcConfig.groups_claim)
