@@ -40,6 +40,7 @@ return {
               required = false
             }
           },
+          { allowed_iss = { type = "set", elements = { type = "string" }, required = false }, },
           {
             introspection_endpoint_auth_method = {
               type = "string",
