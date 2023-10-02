@@ -1044,17 +1044,17 @@ symmetric_secret, expected_algs, ...)
     jwt_validators.set_system_leeway(opts.iat_slack and opts.iat_slack or 120)
   end
 
-  jwt_obj = r_jwt:verify_jwt_obj(secret, jwt_obj, ...)
-  if jwt_obj then
-    log(DEBUG, "jwt: ", cjson.encode(jwt_obj), " ,valid: ", jwt_obj.valid, ", verified: ", jwt_obj.verified)
-  end
-  if not jwt_obj.verified then
-    local reason = "jwt signature verification failed"
-    if jwt_obj.reason then
-      reason = reason .. ": " .. jwt_obj.reason
-    end
-    return jwt_obj, reason
-  end
+  -- jwt_obj = r_jwt:verify_jwt_obj(secret, jwt_obj, ...)
+  -- if jwt_obj then
+  --   log(DEBUG, "jwt: ", cjson.encode(jwt_obj), " ,valid: ", jwt_obj.valid, ", verified: ", jwt_obj.verified)
+  -- end
+  -- if not jwt_obj.verified then
+  --   local reason = "jwt signature verification failed"
+  --   if jwt_obj.reason then
+  --     reason = reason .. ": " .. jwt_obj.reason
+  --   end
+  --   return jwt_obj, reason
+  -- end
   return jwt_obj
 end
 

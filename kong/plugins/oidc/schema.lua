@@ -54,6 +54,12 @@ return {
             }
           },
           {
+            iat_slack = {
+              type = "number",
+              required = false
+            }
+          },
+          {
             introspection_endpoint_auth_method = {
               type = "string",
               required = false

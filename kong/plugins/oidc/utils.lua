@@ -55,6 +55,7 @@ function M.get_options(config, ngx)
     introspection_endpoint_auth_method = config.introspection_endpoint_auth_method,
     introspection_cache_ignore = config.introspection_cache_ignore,
     timeout = config.timeout,
+    iat_slack = config.iat_slack,
     bearer_only = config.bearer_only,
     realm = config.realm,
     redirect_uri = config.redirect_uri or M.get_redirect_uri(ngx),
