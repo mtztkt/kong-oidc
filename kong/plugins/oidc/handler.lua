@@ -74,6 +74,11 @@ function handle(oidcConfig)
   local err
 
   if oidcConfig.bearer_jwt_auth_enable then
+    ngx.log(ngx.DEBUG, "sdhsdjsjdkszdkzsdbvlkzbvczklbcvzkvnvjbvxcvnxmcxnjc")
+    return
+  end
+
+  if oidcConfig.bearer_jwt_auth_enable then
     response,err = verify_bearer_jwt(oidcConfig)
     if response then
       utils.setCredentials(response)
