@@ -99,10 +99,10 @@ function openidc.cache_set(type, key, value, exp)
 end
 
 local function openidc_cache_set(type, key, value, exp)
-  local dict = ngx.shared.kong
+  local dict = ngx.shared.kong_oidc
   if dict and (exp > 0) then
     local success, err, forcible = dict:set(type .. '#' ..key, value, exp)
-    log(DEBUG, "cache set: success=", success, " err=", err, " forcible=", forcible)
+    log(DEBUG, "cache set: success=", success, " err=", err, " forcible=", forcible,"shared_db=kong_oidc")
   end
 end
 
@@ -111,7 +111,7 @@ function openidc.cache_get(type, key)
 end
 -- retrieve value from server-wide cache if available
 local function openidc_cache_get(type, key)
-  local dict = ngx.shared.kong
+  local dict = ngx.shared.kong_oidc
   local value
   if dict then
     value = dict:get(type .. '#' ..key)
@@ -121,10 +121,10 @@ local function openidc_cache_get(type, key)
 end
 
 -- invalidate values of server-wide cache
-local function openidc_cache_invalidate(type)
-  local dict = ngx.shared.kong
+local function openidc_cache_invalidate()
+  local dict = ngx.shared.kong_oidc
   if dict then
-    log(DEBUG, "flushing cache for " .. type)
+    log(DEBUG, "flushing cache for kong_oidc")
     dict.flush_all(dict)
     local nbr = dict.flush_expired(dict)
   end
@@ -132,10 +132,7 @@ end
 
 -- invalidate all server-wide caches
 function openidc.invalidate_caches()
-  openidc_cache_invalidate("discovery")
-  openidc_cache_invalidate("jwks")
-  openidc_cache_invalidate("introspection")
-  openidc_cache_invalidate("jwt_verification")
+  openidc_cache_invalidate()
 end
 
 -- validate the contents of and id_token
