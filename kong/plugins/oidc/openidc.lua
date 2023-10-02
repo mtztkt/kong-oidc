@@ -94,6 +94,10 @@ local function store_in_session(opts, feature)
 end
 
 -- set value in server-wide cache if available
+function openidc.cache_set(type, key, value, exp)
+  openidc_cache_set(type, key, value, exp)
+end
+
 local function openidc_cache_set(type, key, value, exp)
   local dict = ngx.shared[type]
   if dict and (exp > 0) then
@@ -102,6 +106,9 @@ local function openidc_cache_set(type, key, value, exp)
   end
 end
 
+function openidc.cache_get(type, key)
+  return openidc_cache_get(type, key)
+end
 -- retrieve value from server-wide cache if available
 local function openidc_cache_get(type, key)
   local dict = ngx.shared[type]
