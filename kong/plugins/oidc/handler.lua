@@ -74,7 +74,13 @@ function handle(oidcConfig)
   local err
 
   if oidcConfig.bearer_jwt_auth_enable then
-    response,err = verify_bearer_jwt(oidcConfig)
+    response,err,has_token_header = verify_bearer_jwt(oidcConfig)
+    
+    if oidcConfig.disable_jwt_validation and has_token_header then
+      ngx.log(ngx.DEBUG, "disable validation : true")
+      return
+    end
+
     if response then
       utils.setCredentials(response)
       utils.injectGroups(response, oidcConfig.groups_claim)
@@ -84,6 +90,7 @@ function handle(oidcConfig)
       end
       return
     end
+
     if err then
       if err == 'unauthorized request' then
         ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
@@ -94,6 +101,7 @@ function handle(oidcConfig)
         return kong.response.error(ngx.HTTP_NOT_FOUND)
       end
     end
+    
   end
 
   if oidcConfig.introspection_endpoint then
@@ -201,7 +209,12 @@ end
 
 function verify_bearer_jwt(oidcConfig)
   if not utils.has_bearer_access_token() then
-    return nil,nil
+    return nil,nil,false
+  end
+
+  if oidcConfig.disable_jwt_validation then
+    ngx.log(ngx.DEBUG, "disable validation : true")
+    return nil,nil,true
   end
   -- setup controlled configuration for bearer_jwt_verify
   local opts = {
@@ -219,7 +232,7 @@ function verify_bearer_jwt(oidcConfig)
   local discovery_doc, err = openidc.get_discovery_doc(opts)
     if err then
       kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
-      return nil,'not_found'
+      return nil,'not_found',true
     end
     issuer = discovery_doc.issuer
   end 
@@ -242,10 +255,10 @@ function verify_bearer_jwt(oidcConfig)
   local json, err, token = openidc.bearer_jwt_verify(opts, claim_spec)
   if err then
     kong.log.err('Bearer JWT verify failed: ' .. err)
-    return nil,'unauthorized request'
+    return nil,'unauthorized request',true
   end
 
-  return json,nil
+  return json,nil,true
 end
 
 return OidcHandler

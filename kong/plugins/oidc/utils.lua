@@ -51,6 +51,7 @@ function M.get_options(config, ngx)
     discovery = config.discovery,
     introspection_endpoint = config.introspection_endpoint,
     issuer = config.issuer,
+    disable_jwt_validation = config.disable_jwt_validation == "yes",
     introspection_endpoint_auth_method = config.introspection_endpoint_auth_method,
     introspection_cache_ignore = config.introspection_cache_ignore,
     timeout = config.timeout,

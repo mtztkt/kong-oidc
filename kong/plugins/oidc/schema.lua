@@ -47,6 +47,13 @@ return {
             }
           },
           {
+            disable_jwt_validation = {
+              type = "string",
+              required = true,
+              default = "no"
+            }
+          },
+          {
             introspection_endpoint_auth_method = {
               type = "string",
               required = false

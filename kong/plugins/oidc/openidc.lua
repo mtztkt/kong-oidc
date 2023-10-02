@@ -621,6 +621,10 @@ end
 
 -- make a call to the userinfo endpoint
 function openidc.call_userinfo_endpoint(opts, access_token)
+  if opts.disable_userinfo_header  then
+    log(DEBUG, "disable_userinfo_header: true")
+    return nil, nil
+  end
   local err = openidc_ensure_discovered_data(opts)
   if err then
     return nil, err
