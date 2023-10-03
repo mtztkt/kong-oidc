@@ -4,12 +4,12 @@ local http = require("resty.http")
 local cjson = require("cjson")
 local cjson_s = require("cjson.safe")
 local function find_plugin()
-    for plugin, err in kong.db.plugins:each(1000) do
+    for plugin, err in kong.db.plugins:each() do
       if err then
         return nil, err
       end
   
-      if plugin.name == "oidc" and plugin.service_id == nil then
+      if plugin.name == "oidc" and plugin.enabled == true  and not plugin.service_id then
         return plugin
       end
     end
