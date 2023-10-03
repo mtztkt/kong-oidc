@@ -9,8 +9,7 @@ local function find_plugin()
         return nil, err
       end
   
-      if plugin.name == "oidc" and plugin.enabled == true  and not plugin.service_id then
-        ngx.log(ngx.DEBUG, "endpoint response: ", plugin)
+      if plugin.name == "oidc" and plugin.enabled == true  and #plugin.service_id == 0 then
         return plugin
       end
     end
