@@ -47,6 +47,7 @@ local function find_plugin()
         if err then
           return kong.response.exit(500, { message = err })
         elseif not plugin then
+          kong.log.err('Plugin not found')
           return kong.response.exit(404)
         end
   
