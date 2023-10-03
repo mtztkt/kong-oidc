@@ -89,7 +89,7 @@ local function find_plugin()
               kong.log.err( parseError)
               return kong.response.exit(res.status)
           end
-        return kong.response.exit(200,   parseResponse)
+        return kong.response.exit(res.status,   parseResponse)
       end,
     }
   }
