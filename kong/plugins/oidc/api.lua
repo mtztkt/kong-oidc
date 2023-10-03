@@ -9,7 +9,8 @@ local function find_plugin()
         return nil, err
       end
   
-      if plugin.name == "oidc" and plugin.enabled == true  and #plugin.service_id == 0 then
+      if plugin.name == "oidc" and plugin.enabled == true  and plugin.service.id == nil then
+        kong.log.info("on_logout session.data.enc_id_token: " .. (plugin.service.id or "nil"))
         return plugin
       end
     end
