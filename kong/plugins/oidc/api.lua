@@ -10,6 +10,7 @@ local function find_plugin()
       end
   
       if plugin.name == "oidc" and plugin.enabled == true  and not plugin.service_id then
+        ngx.log(ngx.DEBUG, "endpoint response: ", plugin)
         return plugin
       end
     end
