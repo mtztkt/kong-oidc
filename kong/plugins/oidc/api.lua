@@ -87,7 +87,7 @@ local function find_plugin()
           local parseResponse,parseError = openidc_parse_json_response(res)
           if parseError then 
               kong.log.err( parseError)
-              return kong.response.exit(parseResponse.status)
+              return kong.response.exit(parseError.status)
           end
         return kong.response.exit(200,   parseResponse)
       end,
