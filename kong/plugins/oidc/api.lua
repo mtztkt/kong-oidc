@@ -9,8 +9,7 @@ local function find_plugin()
         return nil, err
       end
   
-      if plugin.name == "oidc" and plugin.enabled == true  and plugin.service.id == nil then
-        kong.log.info("on_logout session.data.enc_id_token: " .. (plugin.service.id or "nil"))
+      if plugin.name == "oidc" and plugin.enabled == true  and (plugin.service == nil or plugin.service.id == nil) then
         return plugin
       end
     end
@@ -52,8 +51,6 @@ local function find_plugin()
         end
   
         local conf = plugin.config
-
-        kong.log.info("Service ID: " .. conf.client_id)
 
         local discovery_doc, err = openidc.get_discovery_doc(conf)
         if err then
