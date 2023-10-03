@@ -52,6 +52,8 @@ local function find_plugin()
   
         local conf = plugin.config
 
+        kong.log.info("Service ID: " .. conf.client_id)
+
         local discovery_doc, err = openidc.get_discovery_doc(conf)
         if err then
           kong.log.err('Discovery document retrieval for Bearer JWT verify failed')
