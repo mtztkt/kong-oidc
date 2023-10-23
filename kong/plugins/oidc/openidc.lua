@@ -1353,6 +1353,7 @@ local function openidc_logout(opts, session)
     end
     local params = {}
     if (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) and session_token then
+      log(WARN, "mustasadadadad in `on_logout` handler: " .. err)
       params["id_token_hint"] = session_token
     end
     if opts.post_logout_redirect_uri then
