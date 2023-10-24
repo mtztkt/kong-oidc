@@ -1482,7 +1482,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     local present
     local refreshed
     session, session_error,present, refreshed = r_session.start(session_or_opts)
-    if session_error then
+    if session_error and session_error != "error" then
       log(ERROR, "Error starting session: " .. session_error)
       if session then
         session:destroy()
