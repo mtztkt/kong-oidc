@@ -1487,6 +1487,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       if session then
         session:destroy()
       end
+      log(WARN, "Redirect : " .. session_or_opts.post_logout_redirect_uri)
       ngx.redirect(session_or_opts.post_logout_redirect_uri)
       return nil, session_error, target_url, session
     end
