@@ -1482,14 +1482,8 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
     local present
     local refreshed
     session, session_error,present, refreshed = r_session.start(session_or_opts)
-    if session_error and session_error ~= "missing session audience" then
+    if session == nil then
       log(ERROR, "Error starting session: " .. session_error)
-      if session then
-        log(ERROR, "Error starting session state: " .. session.state)
-        session:destroy()
-      end
-      log(WARN, "Redirect : " .. session_or_opts.post_logout_redirect_uri)
-      ngx.redirect(session_or_opts.post_logout_redirect_uri)
       return nil, session_error, target_url, session
     end
     log(DEBUG,
