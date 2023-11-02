@@ -79,6 +79,34 @@ return {
             }
           },
           {
+            stale_ttl = {
+              type = "number",
+              required = false,
+              default = 10
+            }
+          },
+          {
+            idling_timeout = {
+              type = "number",
+              required = false,
+              default = 900
+            }
+          },
+          {
+            rolling_timeout = {
+              type = "number",
+              required = false,
+              default = 3600
+            }
+          },
+          {
+            absolute_timeout = {
+              type = "number",
+              required = false,
+              default = 86400
+            }
+          },
+          {
             bearer_only = {
               type = "string",
               required = true,
