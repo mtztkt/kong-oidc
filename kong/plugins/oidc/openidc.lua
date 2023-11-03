@@ -1321,15 +1321,8 @@ local function openidc_logout(opts, session)
       return err
     end
   end
-  local session_error
-  local session
-  session, session_error =   session:destroy()
 
-  if session_error then
-    log(ERROR, "xxx failed in `on_logout` handler: " .. session_error)
-    return err
-  end
-
+  session:destroy()
 
   if opts.revoke_tokens_on_logout then
     log(DEBUG, "revoke_tokens_on_logout is enabled. " ..
