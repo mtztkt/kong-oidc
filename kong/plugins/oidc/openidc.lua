@@ -1328,7 +1328,7 @@ end
 
   local destroy_error
   local ok
-  ok, destroy_error =   session:destroy()
+  ok, destroy_error = session:destroy()
 
   if destroy_error then
     log(ERROR, "xxx failed in `on_logout` handler: " .. destroy_error)
@@ -1374,9 +1374,7 @@ end
 
       if not session_token then
         log(ERROR, "xxx logout redirect :", opts.post_logout_redirect_uri)
-        ngx.say("<html><body>Logged Out</body></html>")
-        ngx.exit(ngx.OK)
-       -- return ngx.redirect(opts.post_logout_redirect_uri)
+        return ngx.redirect(opts.post_logout_redirect_uri)
       end
 
       params["id_token_hint"] = session_token
