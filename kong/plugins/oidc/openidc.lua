@@ -1321,8 +1321,15 @@ local function openidc_logout(opts, session)
       return err
     end
   end
+  local session_error
+  local session
+  session, session_error =   session:destroy()
 
-  session:destroy()
+  if session_error then
+    log(ERROR, "xxx failed in `on_logout` handler: " .. session_error)
+    return err
+  end
+
 
   if opts.revoke_tokens_on_logout then
     log(DEBUG, "revoke_tokens_on_logout is enabled. " ..
@@ -1355,7 +1362,7 @@ local function openidc_logout(opts, session)
       uri = opts.discovery.end_session_endpoint
     end
     local params = {}
-    if (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) then
+    if (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) and session_token then
 
       if not session_token then
         log(ERROR, "xxx logout redirect :", opts.post_logout_redirect_uri)
