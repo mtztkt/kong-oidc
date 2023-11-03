@@ -1358,6 +1358,7 @@ local function openidc_logout(opts, session)
     if (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) then
 
       if not session_token then
+        log(ERROR, "xxx logout redirect :", opts.post_logout_redirect_uri)
         return ngx.redirect(opts.post_logout_redirect_uri)
       end
 
