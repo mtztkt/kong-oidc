@@ -1122,7 +1122,8 @@ local function openidc_authorization_response(opts, session)
     client_err = "state from argument does not match state restored from session"
     log(ERROR, log_err)
     session:destroy()
-   -- return ngx.redirect(opts.post_logout_redirect_uri)
+    log(ERROR, "xxx redirect :", opts.post_logout_redirect_uri)
+    return ngx.redirect(opts.post_logout_redirect_uri)
    -- return nil, client_err, session.data.original_url, session
   end
 
