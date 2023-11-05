@@ -1326,7 +1326,7 @@ if not session then
   log(WARN, "xyxyxyxy")
 end
 
-if not if session.data.access_token == nil then
+if session.data.access_token == nil then
   log(WARN, "zzzzzzzzzzz")
 end
 
