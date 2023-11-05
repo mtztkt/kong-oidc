@@ -1564,7 +1564,8 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
     if not session.data.enc_id_token then
       log(ERROR, "xxxxx session_token not found logout redirect :", opts.post_logout_redirect_uri)
-      openidc_authorize(opts, session, target_url, "none")
+      log(ERROR, "yyyyy session_token not found logout redirect :", ngx.var.scheme .. "://" .. ngx.var.host .. ngx.var.uri)
+      openidc_authorize(opts, session, ngx.var.scheme .. "://" .. ngx.var.host .. ngx.var.uri, "none")
       return nil, nil, target_url, session
     end
     
