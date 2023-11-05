@@ -1326,6 +1326,10 @@ if not session then
   log(WARN, "xyxyxyxy")
 end
 
+if not if session.data.access_token == nil then
+  log(WARN, "zzzzzzzzzzz")
+end
+
   local destroy_error
   local ok
   ok, destroy_error = session:destroy()
