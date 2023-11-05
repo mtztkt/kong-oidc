@@ -1375,7 +1375,7 @@ local function openidc_logout(opts, session)
 
       if not session_token then
         log(ERROR, "session_token not found logout redirect :", opts.post_logout_redirect_uri)
-        return openidc_authorize(opts, session, opts.logout_path, "none")
+        return openidc_authorize(opts, session, opts.logout_path, "login")
       end
 
       params["id_token_hint"] = session_token
