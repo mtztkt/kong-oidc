@@ -1327,18 +1327,21 @@ local function openidc_logout(opts, session)
     return ngx.redirect(opts.post_logout_redirect_uri)
   end
 
-  -- local destroy_error
-  -- local ok
-  -- ok, destroy_error = session:destroy()
+  if not (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) or ((opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) and session_token) then
+    local destroy_error
+    local ok
+    ok, destroy_error = session:destroy()
 
-  -- if destroy_error then
-  --   log(ERROR, "logout destroy failed : " .. destroy_error)
-  --   return ngx.redirect(opts.post_logout_redirect_uri)
-  -- end
+    if destroy_error then
+      log(ERROR, "logout destroy failed : " .. destroy_error)
+      return ngx.redirect(opts.post_logout_redirect_uri)
+    end
 
-  -- if ok then
-  --   log(DEBUG, "logout destroy ok")
-  -- end
+    if ok then
+      log(DEBUG, "logout destroy ok")
+    end
+  end
+
 
   if opts.revoke_tokens_on_logout then
     log(DEBUG, "revoke_tokens_on_logout is enabled. " ..
