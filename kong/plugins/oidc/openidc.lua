@@ -341,7 +341,7 @@ local function openidc_authorize(opts, session, target_url, prompt)
     client_id = opts.client_id,
     response_type = "code",
     scope = opts.scope and opts.scope or "openid email profile",
-    redirect_uri = ngx.var.scheme .. "://" .. ngx.var.host .. target_url, -- openidc_get_redirect_uri(opts, session),
+    redirect_uri = "http://192.168.1.46:9000" .. target_url, -- openidc_get_redirect_uri(opts, session),
     state = state,
   }
 
