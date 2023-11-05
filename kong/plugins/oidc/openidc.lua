@@ -1122,7 +1122,7 @@ local function openidc_authorization_response(opts, session)
     client_err = "state from argument does not match state restored from session"
     log(ERROR, log_err)
     session:destroy()
-    log(ERROR, "xxx redirect :", opts.post_logout_redirect_uri)
+    log(ERROR, "session does not match redirect :", opts.post_logout_redirect_uri)
     return ngx.redirect(opts.post_logout_redirect_uri)
    -- return nil, client_err, session.data.original_url, session
   end
@@ -1322,25 +1322,22 @@ local function openidc_logout(opts, session)
     end
   end
 
-if not session then
-  log(WARN, "xyxyxyxy")
-end
-
-if session.data.access_token == nil then
-  log(WARN, "zzzzzzzzzzz")
-end
+  if not session then
+    log(ERROR, "session not found")
+    return ngx.redirect(opts.post_logout_redirect_uri)
+  end
 
   local destroy_error
   local ok
   ok, destroy_error = session:destroy()
 
   if destroy_error then
-    log(ERROR, "xxx failed in `on_logout` handler: " .. destroy_error)
-    return err
+    log(ERROR, "logout destroy failed : " .. destroy_error)
+    return ngx.redirect(opts.post_logout_redirect_uri)
   end
 
   if ok then
-    log(ERROR, "xyxyxyxy ok")
+    log(DEBUG, "logout destroy ok")
   end
 
   if opts.revoke_tokens_on_logout then
@@ -1377,7 +1374,7 @@ end
     if (opts.redirect_after_logout_with_id_token_hint or not opts.redirect_after_logout_uri) then
 
       if not session_token then
-        log(ERROR, "xxx logout redirect :", opts.post_logout_redirect_uri)
+        log(ERROR, "session_token not found logout redirect :", opts.post_logout_redirect_uri)
         return ngx.redirect(opts.post_logout_redirect_uri)
       end
 
