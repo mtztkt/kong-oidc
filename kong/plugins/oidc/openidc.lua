@@ -1475,14 +1475,17 @@ local function openidc_access_token(opts, session, try_to_renew)
 end
 
 local function openidc_get_path(uri)
+  log(DEBUG, "zzzzzzzz")
   local without_query = uri:match("(.-)%?") or uri
   return without_query:match(".-//[^/]+(/.*)") or without_query
 end
 
 local function openidc_get_redirect_uri_path(opts)
   if opts.local_redirect_uri_path then
+    log(DEBUG, "xxxxxx")
     return opts.local_redirect_uri_path
   end
+  log(DEBUG, "yyyyyyy")
   return opts.redirect_uri and openidc_get_path(opts.redirect_uri) or opts.redirect_uri_path
 end
 
