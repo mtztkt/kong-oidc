@@ -341,7 +341,7 @@ local function openidc_authorize(opts, session, target_url, prompt)
     client_id = opts.client_id,
     response_type = "code",
     scope = opts.scope and opts.scope or "openid email profile",
-    redirect_uri = "http://192.168.1.46:9000" .. target_url, -- openidc_get_redirect_uri(opts, session),
+    redirect_uri = openidc_get_redirect_uri(opts, session),
     state = state,
   }
 
@@ -1475,17 +1475,14 @@ local function openidc_access_token(opts, session, try_to_renew)
 end
 
 local function openidc_get_path(uri)
-  log(DEBUG, "zzzzzzzz")
   local without_query = uri:match("(.-)%?") or uri
   return without_query:match(".-//[^/]+(/.*)") or without_query
 end
 
 local function openidc_get_redirect_uri_path(opts)
   if opts.local_redirect_uri_path then
-    log(DEBUG, "xxxxxx")
     return opts.local_redirect_uri_path
   end
-  log(DEBUG, "yyyyyyy")
   return opts.redirect_uri and openidc_get_path(opts.redirect_uri) or opts.redirect_uri_path
 end
 
@@ -1562,13 +1559,6 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
       return nil, err, session.data.original_url, session
     end
 
-    if not session.data.enc_id_token then
-      log(ERROR, "xxxxx session_token not found logout redirect :", opts.post_logout_redirect_uri)
-      openidc_authorize(opts, session, "/aurax-ui/", "none")
-      log(ERROR, "ttttt session_token not found logout redirect :", opts.post_logout_redirect_uri)
-      return nil, nil, target_url, session
-    end
-    
     openidc_logout(opts, session)
     return nil, nil, target_url, session
   end
