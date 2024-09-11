@@ -523,7 +523,9 @@ function openidc.call_token_endpoint(opts, endpoint, body, auth, endpoint_name, 
   end
 
   log(DEBUG, "request body for " .. ep_name .. " endpoint call: ", ngx.encode_args(body))
-
+  log(DEBUG, " mzk-2 cookier " .. opts.pass_cookies)
+  log(DEBUG, " mzk-3 ngnixer " .. ngx.req.get_headers()["Cookie"])
+  
   local httpc = http.new()
   openidc_configure_timeouts(httpc, opts.timeout)
   openidc_configure_proxy(httpc, opts.proxy_opts)
