@@ -514,6 +514,7 @@ function openidc.call_token_endpoint(opts, endpoint, body, auth, endpoint_name, 
       for cookie_name in string.gmatch(pass_cookies, "%S+") do
         local cookie_value = ngx.var["cookie_" .. cookie_name]
         if cookie_value then
+          kong.log.info("mzk cookier: " .. cookie_name)
           table.insert(t, cookie_name .. "=" .. cookie_value)
         end
       end
